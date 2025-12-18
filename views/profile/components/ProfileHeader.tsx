@@ -1,4 +1,4 @@
-import { MapPin } from 'lucide-react';
+import { ExternalLink, MapPin } from 'lucide-react';
 import React from 'react';
 import { RestaurantProfile } from '../../../types';
 
@@ -7,6 +7,11 @@ interface ProfileHeaderProps {
 }
 
 export const ProfileHeader: React.FC<ProfileHeaderProps> = ({ profile }) => {
+  const openLocationInMaps = () => {
+    const encodedLocation = encodeURIComponent(profile.location);
+    window.open(`https://www.google.com/maps/search/?api=1&query=${encodedLocation}`, '_blank');
+  };
+
   return (
     <header className="pt-12 pb-8 flex flex-col items-center text-center">
       {/* Brand Identity */}
@@ -29,7 +34,13 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({ profile }) => {
       
       <div className="flex items-center gap-2 text-[#666] text-[11px] font-medium uppercase tracking-widest">
         <MapPin size={12} strokeWidth={2.5} className="text-[#5E6AD2]/60" />
-        <span>{profile.location}</span>
+        <button 
+          onClick={openLocationInMaps}
+          className=""
+          title="View location on Google Maps"
+        >
+          {profile.location}
+        </button>
       </div>
     </header>
   );
