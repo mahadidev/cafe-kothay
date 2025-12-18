@@ -1,5 +1,5 @@
 <div align="center">
-<img width="1200" height="475" alt="Cafe Kothay Banner" src="https://cafekothay.netlify.app/og-image.png" />
+<img width="1200" height="475" alt="Cafe Kothay Banner" src="https://cafekothay.netlify.app/og-image.svg" />
 
 # Cafe Kothay
 

@@ -1,0 +1,41 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#08090A"/>
+  
+  <!-- Aurora Background Blobs -->
+  <g filter="url(#filter0_f)">
+    <circle cx="1000" cy="150" r="250" fill="#5E6AD2" fill-opacity="0.15"/>
+    <circle cx="200" cy="500" r="300" fill="#5E6AD2" fill-opacity="0.1"/>
+  </g>
+
+  <!-- Glassmorphism Border Frame -->
+  <rect x="40" y="40" width="1120" height="550" rx="32" stroke="white" stroke-opacity="0.05" stroke-width="2"/>
+  
+  <!-- Central Content Assembly -->
+  <g transform="translate(600, 315)">
+    <!-- Stylized Coffee Icon -->
+    <g transform="translate(-50, -120) scale(0.2)">
+      <path d="M368 208H400C426.51 208 448 229.49 448 256V272C448 298.51 426.51 320 400 320H368" stroke="#5E6AD2" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M96 208V320C96 390.692 153.308 448 224 448H240C310.692 448 368 390.692 368 320V208" stroke="#E0E0E0" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M176 112V144" stroke="#5E6AD2" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M232 80V144" stroke="#5E6AD2" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M288 112V144" stroke="#5E6AD2" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    
+    <!-- Title -->
+    <text y="40" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-weight="600" font-size="72" fill="white" letter-spacing="-0.02em">Cafe Kothay</text>
+    
+    <!-- Tagline -->
+    <text y="100" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-weight="300" font-size="24" fill="#8A8F98" letter-spacing="0.4em" text-transform="uppercase">A Minimal Restaurant/Café Listing Platform</text>
+  </g>
+
+  <!-- URL Accent -->
+  <text x="600" y="540" text-anchor="middle" font-family="monospace" font-size="16" fill="#5E6AD2" opacity="0.5">cafekothay.netlify.app/</text>
+
+  <defs>
+    <filter id="filter0_f" x="-300" y="-300" width="1800" height="1230" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+      <feGaussianBlur stdDeviation="120" result="effect1_foregroundBlur"/>
+    </filter>
+  </defs>
+</svg>
