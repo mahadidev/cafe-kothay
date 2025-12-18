@@ -4,8 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cafe Kothay</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
     
@@ -15,85 +14,7 @@
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Inter', 'sans-serif'],
-            },
-            colors: {
-              linear: {
-                base: '#08090A', // Deepest black/gray
-                surface: '#121417', // Slightly lighter for cards
-                border: 'rgba(255, 255, 255, 0.08)',
-                accent: '#5E6AD2', // Linear-like Blurple
-                accentHover: '#4e5ac0',
-                text: '#E0E0E0',
-                subtext: '#8A8F98',
-              }
-            }
-          },
-        },
-      }
-    </script>
-    <style>
-      body {
-        background-color: #08090A;
-        color: #E0E0E0;
-        font-family: 'Inter', sans-serif;
-        overflow-x: hidden;
-      }
-      .glass-panel {
-        background: rgba(255, 255, 255, 0.02);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2);
-      }
-      .aurora-blob {
-        position: absolute;
-        border-radius: 50%;
-        filter: blur(100px);
-        opacity: 0.25;
-        z-index: -1;
-      }
-      /* Custom Scrollbar for that minimal feel */
-      ::-webkit-scrollbar {
-        width: 6px;
-        height: 6px;
-      }
-      ::-webkit-scrollbar-track {
-        background: transparent;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #333;
-        border-radius: 3px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #444;
-      }
-      /* Leaflet Custom Overrides for Dark Mode */
-      .leaflet-container {
-        background: #15171B !important;
-      }
-      .leaflet-bar a {
-        background-color: #15171B !important;
-        color: #E0E0E0 !important;
-        border-bottom: 1px solid #333 !important;
-      }
-      .leaflet-bar a:hover {
-        background-color: #222 !important;
-      }
-      .leaflet-control-attribution {
-        background: rgba(0,0,0,0.5) !important;
-        color: #888 !important;
-      }
-      .leaflet-control-attribution a {
-        color: #aaa !important;
-      }
-    </style>
-  <script type="importmap">
+    <script type="importmap">
 {
   "imports": {
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
@@ -110,5 +31,6 @@
 </head>
   <body>
     <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
   </body>
 </html>

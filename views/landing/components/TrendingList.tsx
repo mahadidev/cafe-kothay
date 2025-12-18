@@ -1,9 +1,9 @@
+import { ArrowUpRight, Eye, MapPin } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MapPin, Eye, ArrowUpRight } from 'lucide-react';
+import { GlassCard } from '../../../components/GlassCard';
 import { storageService } from '../../../services/storage';
 import { RestaurantProfile } from '../../../types';
-import { GlassCard } from '../../../components/GlassCard';
 
 export const TrendingList: React.FC = () => {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ export const TrendingList: React.FC = () => {
       </div>
 
       {/* Grid: 2 cards per row on sm+ screens */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4">
         {topProfiles.map((profile, index) => (
           <div 
             key={profile.id}
