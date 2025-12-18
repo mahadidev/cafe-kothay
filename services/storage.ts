@@ -86,7 +86,12 @@ export const storageService = {
   },
 
   sendLoginOtp: async (email: string): Promise<{ success: boolean; message?: string }> => {
-    const { error } = await supabase.auth.signInWithOtp({ email });
+    const { error } = await supabase.auth.signInWithOtp({ 
+      email,
+      options: {
+        shouldCreateUser: false
+      }
+    });
     if (error) {
         return { success: false, message: error.message };
     }
@@ -94,6 +99,7 @@ export const storageService = {
   },
 
   verifyLoginOtp: async (email: string, token: string): Promise<{ success: boolean; message?: string }> => {
+      // Create a temporary session just to verify the OTP
       const { error } = await supabase.auth.verifyOtp({
           email,
           token,
@@ -102,6 +108,17 @@ export const storageService = {
       if (error) {
           return { success: false, message: error.message };
       }
+      
+      // Get current session to see if verification created one
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      // If a session was created, sign out to prevent auto-login
+      if (session) {
+        setTimeout(() => {
+          supabase.auth.signOut().catch(console.error);
+        }, 100);
+      }
+      
       return { success: true };
   },
 

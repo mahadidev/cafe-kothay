@@ -31,8 +31,20 @@ const App: React.FC = () => {
 			console.log('Auth event:', event);
 			setIsAuthenticated(!!session);
 
-			if (event === 'SIGNED_IN' || event === 'USER_UPDATED') {
+			// Don't reset password state if user is currently in password reset flow
+			// Only reset on normal sign in, not on sign out during password reset
+			if (event === 'SIGNED_IN' && !isResettingPassword) {
 				setIsResettingPassword(false);
+			}
+
+			// Don't reset password state on sign out if we're in password reset flow
+			if (event === 'SIGNED_OUT' && isResettingPassword) {
+				// Keep isResettingPassword as true during sign out in password reset flow
+				return;
+			}
+
+			if (event === 'USER_UPDATED') {
+				// Don't reset password state on user updates during password reset
 			}
 
 			if (event === 'PASSWORD_RECOVERY') {

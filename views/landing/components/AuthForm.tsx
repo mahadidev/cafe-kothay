@@ -1,10 +1,10 @@
 
-import React, { useState, useRef, useEffect } from 'react';
-import { ArrowRight, ChevronLeft, Upload, KeyRound, Lock, Mail } from 'lucide-react';
+import { ArrowRight, ChevronLeft, KeyRound, Lock, Mail, Upload } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button } from '../../../components/Button';
 import { GlassCard } from '../../../components/GlassCard';
-import { storageService } from '../../../services/storage';
 import { LocationPicker } from '../../../components/LocationPicker';
+import { storageService } from '../../../services/storage';
 
 interface AuthFormProps {
   onLogin: () => void;
@@ -145,15 +145,20 @@ export const AuthForm: React.FC<AuthFormProps> = ({
     setLoading(true);
     setError('');
     
-    setIsResettingPasswordExternal(true);
-    
     const result = await storageService.verifyLoginOtp(email, otpCode);
     setLoading(false);
 
     if (result.success) {
+      // Force the parent to keep isResettingPassword as true
+      setIsResettingPasswordExternal(true);
       setResetStep(3);
+      
+      // Double-check after a short delay to ensure state is maintained
+      setTimeout(() => {
+        setIsResettingPasswordExternal(true);
+        setResetStep(3);
+      }, 200);
     } else {
-      setIsResettingPasswordExternal(false);
       setError(result.message || 'Invalid code.');
     }
   };
@@ -220,6 +225,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({
     }
   };
 
+    
   if (isResetting) {
     return (
       <GlassCard className="mb-8 !bg-[#0C0D0F] !border-white/[0.06] overflow-hidden">
@@ -243,14 +249,6 @@ export const AuthForm: React.FC<AuthFormProps> = ({
 
         {resetStep === 1 && (
           <form onSubmit={handleSendOtp} className="space-y-5 animate-in slide-in-from-left-4 fade-in duration-300">
-             <div className="text-center mb-2">
-                <div className="w-12 h-12 rounded-full bg-white/5 mx-auto flex items-center justify-center mb-3">
-                    <Mail size={20} className="text-[#5E6AD2]" />
-                </div>
-                <p className="text-[11px] text-[#8A8F98] leading-relaxed px-4">
-                  Enter your email address. We will send you a 6-digit verification code.
-                </p>
-             </div>
              <div>
               <label className="block text-[10px] uppercase tracking-widest text-[#8A8F98] mb-1.5 pl-1 font-medium">Email</label>
               <input 
@@ -300,14 +298,6 @@ export const AuthForm: React.FC<AuthFormProps> = ({
 
         {resetStep === 3 && (
           <form onSubmit={handleUpdatePassword} className="space-y-5 animate-in slide-in-from-right-4 fade-in duration-300">
-             <div className="text-center mb-2">
-                <div className="w-12 h-12 rounded-full bg-white/5 mx-auto flex items-center justify-center mb-3">
-                    <Lock size={20} className="text-[#5E6AD2]" />
-                </div>
-                <p className="text-[11px] text-[#8A8F98] leading-relaxed px-4">
-                  Verification successful. Please set your new password.
-                </p>
-             </div>
              <div>
               <label className="block text-[10px] uppercase tracking-widest text-[#8A8F98] mb-1.5 pl-1 font-medium">New Password</label>
               <input 
