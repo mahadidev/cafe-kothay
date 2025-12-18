@@ -1,11 +1,11 @@
-import React, { useState, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
 import { AlertCircle } from 'lucide-react';
-import { useProfileData } from './hooks/useProfileData';
-import { ProfileHeader } from './components/ProfileHeader';
-import { SearchBar } from './components/SearchBar';
+import React, { useMemo, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { CategoryFilter } from './components/CategoryFilter';
 import { MenuGrid } from './components/MenuGrid';
+import { ProfileHeader } from './components/ProfileHeader';
+import { SearchBar } from './components/SearchBar';
+import { useProfileData } from './hooks/useProfileData';
 
 export const ProfilePage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -62,7 +62,7 @@ export const ProfilePage: React.FC = () => {
             
             {/* Control Hub: Navigation + Search */}
             <div className="sticky top-6 z-50 mb-12 flex flex-col items-center gap-4 animate-in slide-in-from-top-4 duration-700">
-               <div className="w-full max-w-2xl bg-black/40 backdrop-blur-2xl border border-white/5 p-2 rounded-2xl shadow-2xl flex flex-col sm:flex-row gap-2">
+               <div className="w-full max-w-2xl bg-white/1 backdrop-blur-2xl border border-white/5 p-2 rounded-2xl shadow-2xl flex flex-col sm:flex-row gap-2">
                   <div className="flex-1 min-w-0">
                     <SearchBar value={searchQuery} onChange={setSearchQuery} />
                   </div>

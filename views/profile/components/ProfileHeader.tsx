@@ -15,9 +15,9 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({ profile }) => {
   return (
     <header className="pt-12 pb-8 flex flex-col items-center text-center">
       {/* Brand Identity */}
-      <div className="relative group mb-6">
+      <div className="relative group mb-4">
         <div className="absolute inset-0 bg-[#5E6AD2]/20 blur-2xl rounded-full scale-110 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-        <div className="w-20 h-20 bg-black border border-white/10 rounded-[2rem] flex items-center justify-center overflow-hidden relative z-10 shadow-2xl transition-transform duration-500 group-hover:-rotate-3 group-hover:scale-105">
+        <div className="w-20 h-20 bg-black border border-white/10 rounded-full flex items-center justify-center overflow-hidden relative z-10 shadow-2xl transition-transform duration-500 group-hover:-rotate-3 group-hover:scale-105">
            {profile.logoUrl ? (
               <img src={profile.logoUrl} alt={profile.name} className="w-full h-full object-cover" />
            ) : (

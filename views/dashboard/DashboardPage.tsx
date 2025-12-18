@@ -1,15 +1,15 @@
-import React, { useState, useMemo } from 'react';
-import { useDashboardData } from './hooks/useDashboardData';
-import { DashboardSidebar } from './components/DashboardSidebar';
-import { DashboardHeader } from './components/DashboardHeader';
-import { AnalyticsStats } from './components/AnalyticsStats';
-import { QRCodeShare } from './components/QRCodeShare';
-import { MenuList } from './components/MenuList';
-import { ItemModal } from './components/ItemModal';
-import { ProfileModal } from './components/ProfileModal';
-import { OnboardingSetup } from './components/OnboardingSetup';
+import React, { useMemo, useState } from 'react';
 import { storageService } from '../../services/storage';
 import { MenuItem } from '../../types';
+import { AnalyticsStats } from './components/AnalyticsStats';
+import { DashboardHeader } from './components/DashboardHeader';
+import { DashboardSidebar } from './components/DashboardSidebar';
+import { ItemModal } from './components/ItemModal';
+import { MenuList } from './components/MenuList';
+import { OnboardingSetup } from './components/OnboardingSetup';
+import { ProfileModal } from './components/ProfileModal';
+import { QRCodeShare } from './components/QRCodeShare';
+import { useDashboardData } from './hooks/useDashboardData';
 import { MenuItemFormData, ProfileFormData } from './types';
 
 interface DashboardPageProps {
@@ -126,8 +126,8 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ onLogout }) => {
           {activeTab === 'overview' ? (
             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-12">
               {/* Analytics & QR Section (Top) */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="md:col-span-2">
+              <div className="grid grid-cols-1 gap-8">
+                <div className="">
                   <AnalyticsStats views={profile.views} />
                 </div>
                 <div>
