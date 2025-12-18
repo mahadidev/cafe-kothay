@@ -64,7 +64,22 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({ value, onChange,
     }
     loader(true);
     try {
-      const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5`);
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
+      
+      const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5`, {
+        signal: controller.signal,
+        headers: {
+          'User-Agent': 'CafeKothay/1.0 (https://cafe-kothay.com; contact@cafe-kothay.com)'
+        }
+      });
+      
+      clearTimeout(timeoutId);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
       setter(data || []);
     } catch (error) {
@@ -149,12 +164,30 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({ value, onChange,
         );
       } else if (value) {
         // Try to geocode current value to set initial map position
-        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(value)}&limit=1`)
-          .then(r => r.json())
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
+        
+        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(value)}&limit=1`, {
+          signal: controller.signal,
+          headers: {
+            'User-Agent': 'CafeKothay/1.0 (https://cafe-kothay.com; contact@cafe-kothay.com)'
+          }
+        })
+          .then(r => {
+            clearTimeout(timeoutId);
+            if (!r.ok) {
+              throw new Error(`HTTP error! status: r.status}`);
+            }
+            return r.json();
+          })
           .then(d => {
             if (d && d[0]) {
                updateMapPosition(parseFloat(d[0].lat), parseFloat(d[0].lon));
             }
+          })
+          .catch(err => {
+            clearTimeout(timeoutId);
+            console.error("Initial geocoding failed:", err);
           });
       }
 
@@ -187,7 +220,24 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({ value, onChange,
   const reverseGeocode = async (lat: number, lng: number) => {
     try {
         setTempAddress("Fetching address...");
-        const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`);
+        
+        // Create AbortController for timeout
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+        
+        const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`, {
+            signal: controller.signal,
+            headers: {
+                'User-Agent': 'CafeKothay/1.0 (https://cafe-kothay.com; contact@cafe-kothay.com)'
+            }
+        });
+        
+        clearTimeout(timeoutId);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
         const data = await response.json();
         
         if (data && data.display_name) {
@@ -200,7 +250,11 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({ value, onChange,
             setTempAddress("Location selected");
         }
     } catch (err) {
-        setTempAddress(`${lat.toFixed(4)}, ${lng.toFixed(4)}`);
+        if (err.name === 'AbortError') {
+            setTempAddress("Request timeout - try again");
+        } else {
+            setTempAddress(`${lat.toFixed(4)}, ${lng.toFixed(4)}`);
+        }
     }
   };
 
