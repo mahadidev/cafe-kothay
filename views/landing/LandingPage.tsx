@@ -63,7 +63,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onLogin, isResettingPa
           {/* Brand Logo Area - Adjusted for Wide Aspect Ratio */}
           <div className="w-64 h-24 relative flex items-center justify-center">
                <img 
-                 src="https://hvzmawdugcubxxrpfalh.supabase.co/storage/v1/object/public/images/logo.svg" 
+                 src="/logo.svg" 
                  alt="Cafe Kothay" 
                  className="w-full h-full object-contain drop-shadow-2xl animate-in fade-in zoom-in duration-500"
                />
