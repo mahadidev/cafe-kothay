@@ -106,7 +106,7 @@ export const DocumentationPage: React.FC = () => {
            <GlassCard className="!bg-[#0C0D0F] border-white/[0.04] p-0 overflow-hidden">
              <div className="aspect-[1200/630] bg-[#08090A] relative group">
                 <img 
-                  src="/og-image.svg" 
+                  src="/og-image.png" 
                   alt="OG Preview" 
                   className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
                 />

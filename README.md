@@ -1,5 +1,5 @@
 <div align="center">
-<img width="1200" height="475" alt="Cafe Kothay Banner" src="https://cafekothay.netlify.app/og-image.svg" />
+<img width="1200" height="475" alt="Cafe Kothay Banner" src="https://cafekothay.netlify.app/og-image.png" />
 
 # Cafe Kothay
 
@@ -10,6 +10,12 @@
 </div>
 
 ## 📖 About
+
+**Cafe Kothay** is a free, open-source digital menu platform designed specifically for restaurants and cafes. Our mission is to empower local businesses with modern technology by providing them with a simple way to digitize their menus and connect with customers.
+
+Restaurant and cafe owners can easily add their business information, upload their menu items and operating hours, and instantly generate QR codes. These QR codes can be printed and displayed at their establishments, allowing customers to simply scan and view the complete digital menu on their smartphones.
+
+In today's digital age, many local restaurants struggle with costly printed menus and want to offer their customers a contactless, modern dining experience. Cafe Kothay provides a completely free solution that bridges this gap.
 
 Cafe Kothay (meaning "Where is the cafe?") is a minimalist, aesthetic digital menu platform designed to help modern restaurants and cafes create, manage, and share their menus with zero friction. This open-source project features a beautiful glassmorphism design and provides a complete solution for digital menu management.
 
