@@ -1,11 +1,52 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, BookOpen, Utensils, QrCode, Clock, BarChart3, Globe } from 'lucide-react';
+import { ArrowLeft, BookOpen, Utensils, QrCode, Clock, BarChart3, Globe, Download, Share2 } from 'lucide-react';
 import { GlassCard } from '../../components/GlassCard';
 import { Button } from '../../components/Button';
 
+// SVG constant for the OG Image to allow canvas export
+const OG_IMAGE_SVG = `<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#08090A"/>
+  <g opacity="0.15">
+    <circle cx="1000" cy="150" r="250" fill="#5E6AD2"/>
+    <circle cx="200" cy="500" r="300" fill="#5E6AD2"/>
+  </g>
+  <rect x="40" y="40" width="1120" height="550" rx="32" stroke="white" stroke-opacity="0.05" stroke-width="2"/>
+  <g transform="translate(600, 315)">
+    <text y="40" text-anchor="middle" font-family="sans-serif" font-weight="600" font-size="72" fill="white">Cafe Kothay</text>
+    <text y="100" text-anchor="middle" font-family="sans-serif" font-weight="300" font-size="24" fill="#8A8F98" letter-spacing="0.4em">MODERN DIGITAL MENUS</text>
+  </g>
+</svg>`;
+
 export const DocumentationPage: React.FC = () => {
   const navigate = useNavigate();
+
+  const handleDownloadOG = () => {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const img = new Image();
+    
+    canvas.width = 1200;
+    canvas.height = 630;
+
+    const svgBlob = new Blob([OG_IMAGE_SVG], { type: 'image/svg+xml;charset=utf-8' });
+    const url = URL.createObjectURL(svgBlob);
+
+    img.onload = () => {
+      if (ctx) {
+        ctx.fillStyle = "#08090A";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0);
+        const pngUrl = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.href = pngUrl;
+        link.download = 'cafe-kothay-og-thumbnail.png';
+        link.click();
+      }
+      URL.revokeObjectURL(url);
+    };
+    img.src = url;
+  };
 
   const sections = [
     {
@@ -57,6 +98,33 @@ export const DocumentationPage: React.FC = () => {
             <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
             Back to Dashboard
           </Button>
+        </div>
+
+        {/* Brand Assets / Marketing Kit Section */}
+        <div className="mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+           <h2 className="text-[10px] font-bold text-[#333] uppercase tracking-[0.4em] mb-6">Marketing & Brand Assets</h2>
+           <GlassCard className="!bg-[#0C0D0F] border-white/[0.04] p-0 overflow-hidden">
+             <div className="aspect-[1200/630] bg-[#08090A] relative group">
+                <img 
+                  src="https://hvzmawdugcubxxrpfalh.supabase.co/storage/v1/object/public/images/og-thumbnail.png" 
+                  alt="OG Preview" 
+                  className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
+                />
+                <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 bg-black/40 backdrop-blur-sm">
+                   <p className="text-xs font-semibold text-white mb-4 uppercase tracking-widest">Social Media Thumbnail</p>
+                   <Button onClick={handleDownloadOG} variant="primary" className="!h-10 !px-6">
+                      <Download size={16} /> Export for Social Media
+                   </Button>
+                </div>
+             </div>
+             <div className="p-6">
+                <h3 className="text-sm font-medium text-white mb-2">Open Graph Image (1200x630)</h3>
+                <p className="text-[11px] text-[#8A8F98] leading-relaxed">
+                  Use this thumbnail when sharing your platform on X, Facebook, or LinkedIn. It is pre-configured with our signature 
+                  glassmorphism style to ensure your links look professional.
+                </p>
+             </div>
+           </GlassCard>
         </div>
 
         {/* Introduction */}
