@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 80" fill="none">
+  <!-- Group to center the entire logo assembly (approx 300px wide) -->
+  <g transform="translate(25, 0)">
+    <!-- Icon: Scaled and vertically centered (80 - 67.2)/2 = 6.4 -->
+    <g transform="translate(0, 6.4) scale(0.15)">
+      <path d="M368 208H400C426.51 208 448 229.49 448 256V272C448 298.51 426.51 320 400 320H368" stroke="#5E6AD2" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M96 208V320C96 390.692 153.308 448 224 448H240C310.692 448 368 390.692 368 320V208" stroke="#E0E0E0" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M176 112V144" stroke="#5E6AD2" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M232 80V144" stroke="#5E6AD2" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M288 112V144" stroke="#5E6AD2" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <!-- Text: Vertically centered using dominant-baseline -->
+    <text x="85" y="42" dominant-baseline="central" font-family="ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial" font-size="38" font-weight="300" fill="#E0E0E0" letter-spacing="-0.5">Cafe Kothay</text>
+  </g>
+</svg>
