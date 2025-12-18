@@ -11,10 +11,14 @@ import { MenuItem, RestaurantProfile } from '../types';
  */
 
 // Supabase Configuration
-const SUPABASE_URL = 'https://hvzmawdugcubxxrpfalh.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_nY-BtD2rFQmNNogyG643fw_0xKd5Tf5';
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+  throw new Error('Missing Supabase configuration. Please check your environment variables.');
+}
+
+export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // --- Type Transformers ---
 
