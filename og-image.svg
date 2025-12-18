@@ -25,11 +25,11 @@
     <text y="40" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-weight="600" font-size="72" fill="white" letter-spacing="-0.02em">Cafe Kothay</text>
     
     <!-- Tagline -->
-    <text y="100" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-weight="300" font-size="24" fill="#8A8F98" letter-spacing="0.4em" text-transform="uppercase">Modern Digital Menus</text>
+    <text y="100" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-weight="300" font-size="24" fill="#8A8F98" letter-spacing="0.4em" text-transform="uppercase">A Minimal Restaurant/Café Listing Platform</text>
   </g>
 
   <!-- URL Accent -->
-  <text x="600" y="540" text-anchor="middle" font-family="monospace" font-size="16" fill="#5E6AD2" opacity="0.5">cafekothay.app</text>
+  <text x="600" y="540" text-anchor="middle" font-family="monospace" font-size="16" fill="#5E6AD2" opacity="0.5">cafekothay.netlify.app/</text>
 
   <defs>
     <filter id="filter0_f" x="-300" y="-300" width="1800" height="1230" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
