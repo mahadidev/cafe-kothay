@@ -69,11 +69,17 @@ export const storageService = {
 
   loginWithGoogle: async (): Promise<void> => {
     const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `${import.meta.env.VITE_SITE_URL || window.location.origin}`
-      }
-    });
+			provider: 'google',
+			options: {
+				redirectTo: `${
+					import.meta.env.VITE_SITE_URL || window.location.origin
+				}`,
+				queryParams: {
+					access_type: 'offline',
+					prompt: 'select_account',
+				},
+			},
+		});
     if (error) {
       console.error('Google login error:', error.message);
     }

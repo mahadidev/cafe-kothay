@@ -1,109 +1,125 @@
-import React, { useState, useEffect } from 'react';
-import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { LandingPage } from './views/landing/LandingPage';
+import React, { useEffect, useState } from 'react';
+import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { storageService, supabase } from './services/storage';
 import { DashboardPage } from './views/dashboard/DashboardPage';
-import { ProfilePage } from './views/profile/ProfilePage';
 import { DocumentationPage } from './views/documentation/DocumentationPage';
+import { LandingPage } from './views/landing/LandingPage';
 import { PrivacyPolicyPage } from './views/legal/PrivacyPolicyPage';
 import { TermsPage } from './views/legal/TermsPage';
-import { storageService, supabase } from './services/storage';
+import { ProfilePage } from './views/profile/ProfilePage';
 
 const App: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [isAuthLoading, setIsAuthLoading] = useState<boolean>(true);
-  const [isResettingPassword, setIsResettingPassword] = useState<boolean>(false);
+	const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+	const [isAuthLoading, setIsAuthLoading] = useState<boolean>(true);
+	const [isResettingPassword, setIsResettingPassword] =
+		useState<boolean>(false);
 
-  useEffect(() => {
-    // Initial Session Check
-    storageService.getCurrentSession().then(session => {
-      setIsAuthenticated(!!session);
-      setIsAuthLoading(false);
-    });
+	useEffect(() => {
+		// Initial Session Check
+		const initializeAuth = async () => {
+			const session = await storageService.getCurrentSession();
+			setIsAuthenticated(!!session);
+			setIsAuthLoading(false);
+		};
 
-    // Listen for auth changes (Login, Logout)
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      setIsAuthenticated(!!session);
-      
-      // If we detect a PASSWORD_RECOVERY event, we should stay on landing/reset flow
-      if (event === 'PASSWORD_RECOVERY') {
-        setIsResettingPassword(true);
-      }
-    });
+		initializeAuth();
 
-    return () => subscription.unsubscribe();
-  }, []);
+		// Listen for auth changes (Login, Logout, OAuth Callback)
+		const {
+			data: { subscription },
+		} = supabase.auth.onAuthStateChange((event, session) => {
+			console.log('Auth event:', event);
+			setIsAuthenticated(!!session);
 
-  const handleLogin = () => {
-    setIsAuthenticated(true);
-    setIsResettingPassword(false);
-  };
+			if (event === 'SIGNED_IN' || event === 'USER_UPDATED') {
+				setIsResettingPassword(false);
+			}
 
-  const handleLogout = () => {
-    storageService.logout();
-    setIsResettingPassword(false);
-  };
+			if (event === 'PASSWORD_RECOVERY') {
+				setIsResettingPassword(true);
+			}
+		});
 
-  if (isAuthLoading) {
-    return <div className="min-h-screen bg-[#08090A] flex items-center justify-center text-[#555]">Loading...</div>;
-  }
+		return () => subscription.unsubscribe();
+	}, []);
 
-  // Protected Route Wrapper
-  const ProtectedRoute = ({ children }: { children: React.ReactElement }) => {
-    if (!isAuthenticated) {
-      return <Navigate to="/" replace />;
-    }
-    return children;
-  };
+	const handleLogin = () => {
+		setIsAuthenticated(true);
+		setIsResettingPassword(false);
+	};
 
-  return (
-    <HashRouter>
-      <Routes>
-        {/* Public Landing & Login */}
-        <Route 
-          path="/" 
-          element={
-            (isAuthenticated && !isResettingPassword) ? 
-              <Navigate to="/dashboard" replace /> : 
-              <LandingPage 
-                onLogin={handleLogin} 
-                isResettingPassword={isResettingPassword}
-                setIsResettingPassword={setIsResettingPassword}
-              />
-          } 
-        />
-        
-        {/* Owner Dashboard (Protected) */}
-        <Route 
-          path="/dashboard" 
-          element={
-            <ProtectedRoute>
-              <DashboardPage onLogout={handleLogout} />
-            </ProtectedRoute>
-          } 
-        />
+	const handleLogout = () => {
+		storageService.logout();
+		setIsResettingPassword(false);
+	};
 
-        {/* Documentation (Protected) */}
-        <Route 
-          path="/documentation" 
-          element={
-            <ProtectedRoute>
-              <DocumentationPage />
-            </ProtectedRoute>
-          } 
-        />
-        
-        {/* Legal Pages (Public) */}
-        <Route path="/privacy" element={<PrivacyPolicyPage />} />
-        <Route path="/terms" element={<TermsPage />} />
+	if (isAuthLoading) {
+		return (
+			<div className="min-h-screen bg-[#08090A] flex items-center justify-center text-[#555]">
+				Loading...
+			</div>
+		);
+	}
 
-        {/* Public Profile/Menu View (Customer) - Dynamic Slug */}
-        <Route path="/menu/:slug" element={<ProfilePage />} />
-        
-        {/* Redirect unknown routes */}
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </HashRouter>
-  );
+	// Protected Route Wrapper
+	const ProtectedRoute = ({ children }: { children: React.ReactElement }) => {
+		if (!isAuthenticated) {
+			return <Navigate to="/" replace />;
+		}
+		return children;
+	};
+
+	return (
+		<HashRouter>
+			<Routes>
+				{/* Public Landing & Login */}
+				<Route
+					path="/"
+					element={
+						isAuthenticated && !isResettingPassword ? (
+							<Navigate to="/dashboard" replace />
+						) : (
+							<LandingPage
+								onLogin={handleLogin}
+								isResettingPassword={isResettingPassword}
+								setIsResettingPassword={setIsResettingPassword}
+							/>
+						)
+					}
+				/>
+
+				{/* Owner Dashboard (Protected) */}
+				<Route
+					path="/dashboard"
+					element={
+						<ProtectedRoute>
+							<DashboardPage onLogout={handleLogout} />
+						</ProtectedRoute>
+					}
+				/>
+
+				{/* Documentation (Protected) */}
+				<Route
+					path="/documentation"
+					element={
+						<ProtectedRoute>
+							<DocumentationPage />
+						</ProtectedRoute>
+					}
+				/>
+
+				{/* Legal Pages (Public) */}
+				<Route path="/privacy" element={<PrivacyPolicyPage />} />
+				<Route path="/terms" element={<TermsPage />} />
+
+				{/* Public Profile/Menu View (Customer) - Dynamic Slug */}
+				<Route path="/menu/:slug" element={<ProfilePage />} />
+
+				{/* Redirect unknown routes */}
+				<Route path="*" element={<Navigate to="/" replace />} />
+			</Routes>
+		</HashRouter>
+	);
 };
 
 export default App;
